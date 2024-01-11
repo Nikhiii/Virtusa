@@ -5,9 +5,11 @@ const getAllEmployees = async (req, res) => {
   try {
     const sortValue = req.body.sortValue || 1;
     const search = req.body.searchValue || '';
-    
     const searchRegex = new RegExp(search, 'i');
-    const employees = await Employee.find({firstName : searchRegex})
+    
+    console.log("sortValuee",sortValue);
+
+    const employees = await Employee.find({firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
     console.log("employees",employees);
     res.status(200).json({"data":employees});
@@ -20,12 +22,15 @@ const getAllEmployees = async (req, res) => {
 // Get a particular Employee Details
 const getEmployeeById = async (req, res) => {
   try {
-    const employee = await Employee.findById(req.params.id, { _id: 0, __v: 0 });
+    const {employeeId} = req.params
+    const employee = await Employee.findOne({employeeId}).select('-_id -__v');
+
     if(!employee){
       return res.status(404).json({"message" : "Employee not found"})
-    }
+    }else{
     res.status(200).json(employee);
-  } catch (error) {
+  } 
+}catch (error) {
     res.status(500).json({ message: error.message });
     }
 };
@@ -46,12 +51,13 @@ const registerEmployee = async (req, res) => {
 // Edit Employee Details
 const editEmployee = async (req, res) => {
   try {
-    const {id} = req.params;
-    const updateemployee = await Employee.findByIdAndUpdate(id, req.body, { new: true });
+    const {employeeId} = req.params;
+    const updateemployee = await Employee.findOneAndUpdate({employeeId}, req.body, { new: true });
     if(!updateemployee){
         return res.status(404).json({"message" : "Employee not found"}); 
+    }else{
+      res.status(200).json({ message: 'Employee details updated successfully' });
     }
-    res.status(200).json({ message: 'Employee details updated successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -60,8 +66,9 @@ const editEmployee = async (req, res) => {
 // Delete Employee Details
 const deleteEmployee = async (req, res) => {
   try {
-    const {id} = req.params;
-    const deleteemployee = await Employee.findByIdAndDelete(id);
+    const {employeeId} = req.params;
+    const deleteemployee = await Employee.findOneAndDelete({employeeId});
+
     if(!deleteemployee){
         return res.status(404).json({"message" : "Employee not found"}); 
     }
@@ -74,11 +81,12 @@ const deleteEmployee = async (req, res) => {
 const getEmployeeByUserId = async (req, res) => {
   try 
   {
+
     const sortValue = req.body.sortValue || 1;
     const search = req.body.searchValue || '';
     const searchRegex = new RegExp(search, 'i');
     const { userId } = req.body;
-    const employee = await Employee.find({userId, firstName : searchRegex})
+    const employee = await Employee.find({userId, firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
  
     res.status(200).json(employee);

@@ -41,7 +41,7 @@ const addUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).select('-_id -__v');
     res.status(200).json({users});
   } catch (error) {
     console.log("getallerror");

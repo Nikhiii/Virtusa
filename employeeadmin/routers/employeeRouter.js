@@ -8,16 +8,16 @@ const router = express.Router();
   router.get('/employee', employeeController.getAllEmployees);
   
   // Get a particular Employee Details
-  router.get('/employee/user/:employeeid', employeeController.getEmployeeById);
+  router.get('/employee/user/:employeeId', employeeController.getEmployeeById);
   
   // Employee Registration
   router.post('/employee', employeeController.registerEmployee);
   
   // Edit Employee Details
-  router.put('/employee/:employeeid', employeeController.editEmployee);
+  router.put('/employee/:employeeId', employeeController.editEmployee);
   
   // Delete Employee Details
-  router.delete('/employee/:employeeid', employeeController.deleteEmployee);
+  router.delete('/employee/:employeeId', employeeController.deleteEmployee);
 
   router.get('/users', userController.getAllUsers);
 

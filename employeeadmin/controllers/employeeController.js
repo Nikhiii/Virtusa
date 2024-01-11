@@ -24,7 +24,7 @@ const getEmployeeById = async (req, res) => {
   try {
     const {employeeId} = req.params
     console.log(employeeId)
-    const employee = await Employee.findOne({employeeId:employeeId}).select('-_id -__v');
+    const employee = await Employee.findOne({employeeId}).select('-_id -__v');
     console.log(employee)
     if(!employee){
       return res.status(404).json({"message" : "Employee not found"})

@@ -1,6 +1,16 @@
 const mongoose = require('mongoose');
 
 const employeeSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true,
+      },
+    employeeId: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: new mongoose.Types.ObjectId, // Auto-generate ObjectId 
+        unique: true,
+      },
     firstName: {
         type: String,
         required: [true, 'First name is required']
@@ -54,7 +64,10 @@ const employeeSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Experience is required'],
     },
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    photo: {
+        type: String,
+        required: true,
+      },
 })
 
 const employee = mongoose.model('Employee', employeeSchema);

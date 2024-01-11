@@ -12,7 +12,7 @@ const getAllEmployees = async (req, res) => {
     const employees = await Employee.find({firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
     console.log("employees",employees);
-    res.status(200).json({employees});
+    res.status(200).json(employees);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -24,7 +24,7 @@ const getEmployeeById = async (req, res) => {
   try {
     const {employeeId} = req.params
     console.log(employeeId)
-    const employee = await Employee.findOne({employeeId}).select('-_id -__v');
+    const employee = await Employee.findOne({employeeId:employeeId}).select('-_id -__v');
     console.log(employee)
     if(!employee){
       return res.status(404).json({"message" : "Employee not found"})
@@ -41,7 +41,7 @@ const getEmployeeById = async (req, res) => {
 // Employee Registration
 const registerEmployee = async (req, res) => {
   try {
-   const employee = await Employee.create(req.body);
+   await Employee.create(req.body);
    res.status(200).json({ message: 'Employee registration successful'});
 
   } catch (error) {

@@ -4,8 +4,8 @@ const userRouter = require('./routers/userRouter');
 const employeeRouter = require('./routers/employeeRouter');
 
 const app = express();
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({limit:'100mb'}));
+app.use(express.urlencoded({ limit: '100mb', extended: true }));
 const cors = require("cors"); // Import the cors package
 
 app.get('/', (req, res) => {
@@ -37,5 +37,5 @@ mongoose
     console.log(error);
   });
 
-app.use('/user', userRouter);
-app.use('/employee', employeeRouter );
+app.use('/api/auth', userRouter);
+app.use('/api', employeeRouter );

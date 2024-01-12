@@ -11,7 +11,7 @@ const getAllEmployees = async (req, res) => {
 
     const employees = await Employee.find({firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
-    console.log("employees",employees);
+    // console.log("employees",employees);
     res.status(200).json({"data":employees});
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -23,9 +23,9 @@ const getAllEmployees = async (req, res) => {
 const getEmployeeById = async (req, res) => {
   try {
     const {employeeId} = req.params
-    console.log(employeeId)
+    // console.log(employeeId)
     const employee = await Employee.findOne({employeeId}).select('-_id -__v');
-    console.log(employee)
+    // console.log(employee)
     if(!employee){
       return res.status(404).json({"message" : "Employee not found"})
     }else{
@@ -85,11 +85,10 @@ const getEmployeeByUserId = async (req, res) => {
     const {userId} = req.params;
 
 
-console.log("employeeId",userId);
+// console.log("employeeId",userId);
     const search = req.query.searchValue || "";
     const searchRegex = new RegExp(search, 'i');
     const employee = await Employee.find({userId, firstName : searchRegex}).select('-_id -__v')
- console.log("employee",employee);
     res.status(200).json(employee);
   } catch (error) {
     console.log("the reason is",error);

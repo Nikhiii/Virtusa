@@ -83,10 +83,9 @@ const getEmployeeByUserId = async (req, res) => {
   try 
   {
 
-    const sortValue = req.body.sortValue || 1;
-    const search = req.body.searchValue || '';
+
+    const sortValue = req.query.sortValue || 1;
     const searchRegex = new RegExp(search, 'i');
-    const { userId } = req.body;
     const employee = await Employee.find({userId, firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
  

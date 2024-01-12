@@ -12,7 +12,7 @@ const getAllEmployees = async (req, res) => {
     const employees = await Employee.find({firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
     console.log("employees",employees);
-    res.status(200).json(employees);
+    res.status(200).json({"data":employees});
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -29,7 +29,7 @@ const getEmployeeById = async (req, res) => {
     if(!employee){
       return res.status(404).json({"message" : "Employee not found"})
     }else{
-    res.status(200).json();
+    res.status(200).json(employee);
   } 
 }catch (error) {
     res.status(500).json({ message: error.message });

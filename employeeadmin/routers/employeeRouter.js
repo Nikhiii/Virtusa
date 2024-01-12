@@ -9,7 +9,7 @@ const router = express.Router();
   
   // Get a particular Employee Details
   router.get('/employee/:employeeId', employeeController.getEmployeeById);
-  router.get('/employee/user/:employeeId', employeeController.getEmployeeByUserId);
+  router.get('/employee/user/:userId', employeeController.getEmployeeByUserId);
   
   // Employee Registration
   router.post('/employee', employeeController.registerEmployee);

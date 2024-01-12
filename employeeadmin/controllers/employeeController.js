@@ -82,13 +82,14 @@ const deleteEmployee = async (req, res) => {
 const getEmployeeByUserId = async (req, res) => {
   try 
   {
+    const {userId} = req.params;
 
 
-    const sortValue = req.query.sortValue || 1;
+console.log("employeeId",userId);
+    const search = req.query.searchValue || "";
     const searchRegex = new RegExp(search, 'i');
     const employee = await Employee.find({userId, firstName : searchRegex}).select('-_id -__v')
-    .sort({experience : parseInt(sortValue)});
- 
+ console.log("employee",employee);
     res.status(200).json(employee);
   } catch (error) {
     console.log("the reason is",error);

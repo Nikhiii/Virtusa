@@ -3,8 +3,8 @@ const Employee = require('../models/employeeModel');
 // Get all Employee Details
 const getAllEmployees = async (req, res) => {
   try {
-    const sortValue = req.body.sortValue || 1;
-    const search = req.body.searchValue || '';
+    const sortValue = req.query.sortValue || 1;
+    const search = req.query.searchValue || '';
     const searchRegex = new RegExp(search, 'i');
     
     console.log("sortValuee",sortValue);

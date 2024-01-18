@@ -2,11 +2,13 @@ const express = require("express");
 const mongoose = require("mongoose");
 // const bookRoutes = require("./routers/bookRouter");
 const userRouter = require("./routers/userRouter");
-const mobileRouter = require("./routers/mobileRouter");
+const doctorRouter = require("./routers/doctorRouter");
+
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const cors = require("cors"); // Import the cors package
+
 const corsOptions = {
   origin: "*", // Replace with the URL of your frontend application
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -19,7 +21,7 @@ const corsOptions = {
 // Enable CORS with the specified options
 app.use(cors(corsOptions));
 mongoose
-  .connect("mongodb://127.0.0.1:27017/mobiledb")
+  .connect("mongodb://127.0.0.1:27017/findoctor")
   .then(() => {
     console.log("Database connected");
     app.listen(8080, () => {
@@ -29,6 +31,7 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-  app.use("/api/auth", userRouter);
-  app.use("/api", mobileRouter);
+  app.use("/user", userRouter);
+  app.use("/doctor", doctorRouter);
+
 

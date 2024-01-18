@@ -7,7 +7,7 @@ const getUserByUsernameAndPassword = async (req, res) => {
   try {
     const { email, password } = req.body;
     console.log(" req.body", req.body);
-    // Find a user with the given username and password  szxdgcfhv g
+    // Find a user with the given username and password
     const user = await User.findOne({ email, password })
     if (!user) {
       return res.status(200).json({ message: 'Invalid Credentials' });
@@ -34,11 +34,13 @@ const addUser = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find();
-    res.status(200).json(users);
+    const users = await User.find({});
+    res.status(200).json({"users" : users});
   } catch (error) {
+    console.log("getallerror");
     res.status(500).json({ message: error.message });
   }
 };

@@ -34,7 +34,7 @@ const userSchema = new mongoose.Schema({
         return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
       },
       message: props => `${props.value} is not a valid email address!`,
-    },  
+    },
   },
   role: {
     type: String,
@@ -44,7 +44,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
     minlength: 6, // Minimum length of the password
-    maxlength: 255, // Maximum length of the password
+    maxlength: 16, // Maximum length of the password
   },
 });
 

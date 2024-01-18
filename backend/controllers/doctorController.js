@@ -12,12 +12,10 @@ const addDoctor = async (req, res) => {
 
 const getAllDoctors = async (req, res) => {
   try {
-    const sortValue = req.body.sortValue || 1;
-    console.log("sortValue" , sortValue);
-    const search = req.body.searchValue || '';
-    
+    const sortValue = req.query.sortValue || 1;
+    const search = req.query.searchValue || '';
     const searchRegex = new RegExp(search, 'i');
-    const doctors = await Doctor.find({firstName : searchRegex})
+    const doctors = await Doctor.find({firstName : searchRegex}).select('-_id -__v')
      .sort({experience : parseInt(sortValue)});
      console.log("doctors",doctors);
     res.status(200).json({doctors});
@@ -28,12 +26,13 @@ const getAllDoctors = async (req, res) => {
 
 const updateDoctor = async (req, res) => {
    try{
-    const { id } = req.params;
-    const doctor = await Doctor.findByIdAndUpdate(id, req.body , {new : true});
+    const { doctorId } = req.params;
+    const doctor = await Doctor.findByIdAndUpdate({doctorId}, req.body , {new : true});
     if(!doctor){
         return res.status(404).json({"message" : "Doctor not found"});
+        }else{
+          res.status(200).json({ "message": "Doctor Updated Successfully" });
         }
-    res.status(200).json({ "message": "Doctor Updated Successfully" });
    } catch (error) {
     res.status(500).json({ message: error.message });
 }
@@ -42,8 +41,8 @@ const updateDoctor = async (req, res) => {
 const deleteDoctor = async (req, res) => {
   try{
 
-    const { id } = req.params;
-    const doctor = await Doctor.findByIdAndDelete(id);
+    const { doctorId } = req.params;
+    const doctor = await Doctor.findOneAndDelete({doctorId});
     if(!doctor){
         return res.status(404).json({"message" : "Doctor not found"});
         }
@@ -56,8 +55,8 @@ const deleteDoctor = async (req, res) => {
 const getDoctorById = async (req, res) => {
   try{
 
-    const { id } = req.params;
-    const doctor = await Doctor.findById(id);
+    const { doctorId } = req.params;
+    const doctor = await Doctor.findOne({doctorId});
     if(!doctor){
         return res.status(404).json({"message" : "Doctor not found"});
         }
@@ -70,6 +69,7 @@ const getDoctorById = async (req, res) => {
 const getDoctorByUserId = async (req, res) => {
 try 
 {
+  con
   const sortValue = req.body.sortValue || 1;
   const search = req.body.searchValue || '';
   const searchRegex = new RegExp(search, 'i');

@@ -6,9 +6,6 @@ const getAllEmployees = async (req, res) => {
     const sortValue = req.query.sortValue || 1;
     const search = req.query.searchValue || '';
     const searchRegex = new RegExp(search, 'i');
-    
-    console.log("sortValuee",sortValue);
-
     const employees = await Employee.find({firstName : searchRegex}).select('-_id -__v')
     .sort({experience : parseInt(sortValue)});
     // console.log("employees",employees);

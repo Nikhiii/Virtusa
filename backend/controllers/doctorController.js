@@ -69,21 +69,19 @@ const getDoctorById = async (req, res) => {
 const getDoctorByUserId = async (req, res) => {
 try 
 {
-  con
-  const sortValue = req.body.sortValue || 1;
+  const {userId} = req.params;
+
   const search = req.body.searchValue || '';
   const searchRegex = new RegExp(search, 'i');
-  const { userId } = req.body;
-  const doctor = await Doctor.find({userId, firstName : searchRegex})
-  .sort({experience : parseInt(sortValue)});
+  const doctor = await Doctor.find({userId, firstName : searchRegex}).select('-_id -__v')
   if(doctor.length === 0 ){
     return res.status(404).json({"message" : "Doctor not found"});
     }
-  res.status(200).json(doctor);
-} catch (error) {
-  console.log("error",error.message);
-  res.status(500).json({ message: error.message});
-}
+    res.status(200).json(doctor);
+  } catch (error) {
+    console.log("error",error.message);
+    res.status(500).json({ message: error.message});
+  }
 };
 
 

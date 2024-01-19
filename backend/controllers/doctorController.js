@@ -27,7 +27,7 @@ const getAllDoctors = async (req, res) => {
 const updateDoctor = async (req, res) => {
    try{
     const { doctorId } = req.params;
-    const doctor = await Doctor.findByIdAndUpdate({doctorId}, req.body , {new : true});
+    const doctor = await Doctor.findOneAndUpdate({doctorId}, req.body , {new : true});
     if(!doctor){
         return res.status(404).json({"message" : "Doctor not found"});
         }else{
@@ -56,7 +56,7 @@ const getDoctorById = async (req, res) => {
   try{
 
     const { doctorId } = req.params;
-    const doctor = await Doctor.findOne({doctorId});
+    const doctor = await Doctor.findOne({doctorId}).select('-_id -__v');
     if(!doctor){
         return res.status(404).json({"message" : "Doctor not found"});
         }

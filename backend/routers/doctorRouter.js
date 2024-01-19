@@ -7,10 +7,10 @@ const router = express.Router();
 //AddDoctor
 router.post('/doctor', doctorContoller.addDoctor);
 //GetAllDoctors
-router.post('/doctor', doctorContoller.getAllDoctors);
+router.get('/doctor', doctorContoller.getAllDoctors);
 //Get a particular doctor
 router.get('/doctor/:doctorId', doctorContoller.getDoctorById);
-router.post('/doctor/user/:userId', doctorContoller.getDoctorByUserId);
+router.get('/doctor/user/:userId', doctorContoller.getDoctorByUserId);
 //Edit doctor
 router.put('/doctor/:doctorId', doctorContoller.updateDoctor);
 //Delete doctor

@@ -17,7 +17,7 @@ const getAllDoctors = async (req, res) => {
     const searchRegex = new RegExp(search, 'i');
     const doctors = await Doctor.find({firstName : searchRegex}).select('-_id -__v')
      .sort({experience : parseInt(sortValue)});
-     console.log("doctors",doctors);
+    //  console.log("doctors",doctors);
     res.status(200).json({doctors});
   } catch (error) {
     res.status(500).json({ message: error.message });

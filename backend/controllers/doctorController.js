@@ -29,8 +29,10 @@ const updateDoctor = async (req, res) => {
     const { doctorId } = req.params;
     const doctor = await Doctor.findOneAndUpdate({doctorId}, req.body , {new : true});
     if(!doctor){
+
         return res.status(404).json({"message" : "Doctor not found"});
         }else{
+          console.log(`Doctor updated successfully: ${doctorId}`);
           res.status(200).json({ "message": "Doctor Updated Successfully" });
         }
    } catch (error) {

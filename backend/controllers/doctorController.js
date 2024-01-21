@@ -32,7 +32,6 @@ const updateDoctor = async (req, res) => {
 
         return res.status(404).json({"message" : "Doctor not found"});
         }else{
-          console.log(`Doctor updated successfully: ${doctorId}`);
           res.status(200).json({ "message": "Doctor Updated Successfully" });
         }
    } catch (error) {

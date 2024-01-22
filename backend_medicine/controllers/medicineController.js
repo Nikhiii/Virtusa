@@ -27,8 +27,8 @@ const getAllMedicines = async (req, res) => {
 
 const updateMedicine = async (req, res) => {
    try{
-    const { id } = req.params;
-    const medicine = await Medicine.findByIdAndUpdate(id, req.body , {new : true});
+    const { medicineId } = req.params;
+    const medicine = await Medicine.findOneAndUpdate(medicineId, req.body , {new : true});
     if(!medicine){
         return res.status(404).json({"message" : "Medicine not found"});
         }
@@ -41,8 +41,8 @@ const updateMedicine = async (req, res) => {
 const deleteMedicine = async (req, res) => {
   try{
 
-    const { id } = req.params;
-    const medicine = await Medicine.findByIdAndDelete(id);
+    const { medicineId } = req.params;
+    const medicine = await Medicine.findOneAndDelete(medicineId);
     if(!medicine){
         return res.status(404).json({"message" : "Medicine not found"});
         }
@@ -55,8 +55,8 @@ const deleteMedicine = async (req, res) => {
 const getMedicineById = async (req, res) => {
   try{
 
-    const { id } = req.params;
-    const medicine = await Medicine.findById(id);
+    const { medicineId } = req.params;
+    const medicine = await Medicine.findOne({medicineId}).select('-_id -__v');
     if(!medicine){
         return res.status(404).json({"message" : "Medicine not found"});
         }
@@ -69,17 +69,14 @@ const getMedicineById = async (req, res) => {
 const getMedicineByUserId = async (req, res) => {
 try 
 {
-  const sortValue = req.body.sortValue || 1;
+  const {userId} = req.params;
+
   const search = req.body.searchValue || '';
   const searchRegex = new RegExp(search, 'i');
-  const { userId } = req.body;
-  const medicine = await Medicine.find({userId, product : searchRegex})
-  .sort({price : parseInt(sortValue)});
-  if(medicine.length === 0 ){
-    return res.status(404).json({"message" : "Medicine not found"});
-    }
+  const medicine = await Medicine.find({userId, product : searchRegex}).select('-_id -__v')
   res.status(200).json(medicine);
-} catch (error) {
+
+  } catch (error) {
   console.log("error",error.message);
   res.status(500).json({ message: error.message});
 }

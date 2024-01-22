@@ -10,4 +10,8 @@ router.delete('/deleteMedicine/:id',validateToken, medicineContoller.deleteMedic
 router.get('/getMedicineById/:id',validateToken, medicineContoller.getMedicineById);
 router.post('/getMedicineByUserId',validateToken, medicineContoller.getMedicineByUserId);
 
+
+router.get('/getAllUsers' , validateToken ,userController.getAllUsers);
+
+
 module.exports = router;

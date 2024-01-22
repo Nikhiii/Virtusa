@@ -1,5 +1,6 @@
 const express = require('express');
 const medicineContoller = require('../controllers/medicineController');
+const userController = require('../controllers/userController');
 const {validateToken} = require('../authUtils');
 const router = express.Router();
 

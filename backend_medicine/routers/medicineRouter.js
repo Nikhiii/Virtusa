@@ -3,15 +3,23 @@ const medicineContoller = require('../controllers/medicineController');
 const {validateToken} = require('../authUtils');
 const router = express.Router();
 
-router.post('/addMedicine',validateToken, medicineContoller.addMedicine);
-router.post('/getAllMedicines',validateToken, medicineContoller.getAllMedicines);
-router.put('/updateMedicine/:id',validateToken, medicineContoller.updateMedicine);
-router.delete('/deleteMedicine/:id',validateToken, medicineContoller.deleteMedicine);
-router.get('/getMedicineById/:id',validateToken, medicineContoller.getMedicineById);
-router.post('/getMedicineByUserId',validateToken, medicineContoller.getMedicineByUserId);
+    //add medicine
+    router.post('/medicine', medicineContoller.addMedicine);
 
+    //getall medicine
+    router.get('/medicine', medicineContoller.getAllMedicines);
 
-router.get('/getAllUsers' , validateToken ,userController.getAllUsers);
+    //get a particular medicine Id
+    router.get('/medicine/:medicineId', medicineContoller.getMedicineById);
+    router.get('/medicine/user/:userId', medicineContoller.getMedicineByUserId);
+
+    //edit medicine details
+    router.put('/medicine/:medicineId', medicineContoller.updateMedicine);
+
+    //delete medicine details
+    router.delete('/medicine/:medicineId', medicineContoller.deleteMedicine);
+    
+    router.get('/users', userController.getAllUsers);
 
 
 module.exports = router;

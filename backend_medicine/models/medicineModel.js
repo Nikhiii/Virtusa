@@ -6,7 +6,7 @@ const medicineSchema = new mongoose.Schema({
     ref: 'User',
     required: true,
   },
-  productId: {
+  medicineId: {
     type: mongoose.Schema.Types.ObjectId,
     default: new mongoose.Types.ObjectId, // Auto-generate ObjectId 
     unique: true,

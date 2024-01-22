@@ -28,7 +28,7 @@ const getAllMedicines = async (req, res) => {
 const updateMedicine = async (req, res) => {
    try{
     const { medicineId } = req.params;
-    const medicine = await Medicine.findOneAndUpdate(medicineId, req.body , {new : true});
+    const medicine = await Medicine.findOneAndUpdate({medicineId}, req.body , {new : true});
     if(!medicine){
         return res.status(404).json({"message" : "Medicine not found"});
         }
@@ -71,7 +71,7 @@ try
 {
   const {userId} = req.params;
 
-  const search = req.body.searchValue || '';
+  const search = req.query.searchValue || "";
   const searchRegex = new RegExp(search, 'i');
   const medicine = await Medicine.find({userId, product : searchRegex}).select('-_id -__v')
   res.status(200).json(medicine);

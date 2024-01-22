@@ -72,7 +72,7 @@ try
 {
   const {userId} = req.params;
 
-  const search = req.body.searchValue || '';
+  const search = req.query.searchValue || '';
   const searchRegex = new RegExp(search, 'i');
   const doctor = await Doctor.find({userId, firstName : searchRegex}).select('-_id -__v')
   if(doctor.length === 0 ){

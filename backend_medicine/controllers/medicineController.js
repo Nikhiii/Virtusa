@@ -12,11 +12,11 @@ const addMedicine = async (req, res) => {
 
 const getAllMedicines = async (req, res) => {
   try {
-    const sortValue = req.body.sortValue || 1;
-    const search = req.body.searchValue || '';
+    const sortValue = req.query.sortValue || 1;
+    const search = req.query.searchValue || '';
     
     const searchRegex = new RegExp(search, 'i');
-    const medicines = await Medicine.find({product : searchRegex})
+    const medicines = await Medicine.find({product : searchRegex}).select('-_id -__v')
      .sort({price : parseInt(sortValue)});
      console.log("medicines",medicines);
     res.status(200).json({medicines});

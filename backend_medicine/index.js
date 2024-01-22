@@ -31,7 +31,7 @@ mongoose
   .catch((error) => {
     console.log(error);
   });
-  app.use("/user", userRouter);
-  app.use("/medicine", medicineRouter);
+  app.use("/api/auth", userRouter);
+  app.use("/api", medicineRouter);
 
 

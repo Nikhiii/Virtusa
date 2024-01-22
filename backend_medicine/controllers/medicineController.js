@@ -5,7 +5,7 @@ const addMedicine = async (req, res) => {
     await Medicine.create(req.body);
     res.status(200).json({ "message": "Medicine added Successfully" });
   } catch (error) {
-    console.log("error",error)
+    // console.log("error",error)
     res.status(500).json({ message: error.message });
   }
 }
@@ -18,7 +18,7 @@ const getAllMedicines = async (req, res) => {
     const searchRegex = new RegExp(search, 'i');
     const medicines = await Medicine.find({product : searchRegex}).select('-_id -__v')
      .sort({price : parseInt(sortValue)});
-     console.log("medicines",medicines);
+    //  console.log("medicines",medicines);
     res.status(200).json({medicines});
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -77,7 +77,7 @@ try
   res.status(200).json(medicine);
 
   } catch (error) {
-  console.log("error",error.message);
+  // console.log("error",error.message);
   res.status(500).json({ message: error.message});
 }
 };
